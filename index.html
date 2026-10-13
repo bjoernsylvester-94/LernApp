@@ -27,7 +27,8 @@
   --f-body:"Andika","Comic Sans MS",system-ui,sans-serif;
   color-scheme: light;
 }
-html{background:var(--paper)}
+html{background:var(--paper);overscroll-behavior-y:contain}
+body{overscroll-behavior-y:contain}
 body{
   background-color:var(--paper); color:var(--ink); font-family:var(--f-body); font-size:18px;
   background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
@@ -341,7 +342,9 @@ function renderMenu(){
 }
 
 /* Spielen */
-function startEx(id){const p=prof();play={ex:id,L:p.level||10,R:(p.rows&&p.rows.length?p.rows:ALLROWS),i:0,stars:0,res:[],used:new Set(),task:null,first:true,hint:false,locked:false,pos:0};nextTask()}
+function startEx(id){const p=prof();play={ex:id,L:p.level||10,R:(p.rows&&p.rows.length?p.rows:ALLROWS),i:0,stars:0,res:[],used:new Set(),task:null,first:true,hint:false,locked:false,pos:0};saveRound();nextTask()}
+function saveRound(){store.round={pid:store.current,ex:play.ex,L:play.L,R:play.R,i:play.i,stars:play.stars,res:play.res,used:[...play.used]};save()}
+function resume(){const r=store.round;play={ex:r.ex,L:r.L,R:r.R,i:r.i,stars:r.stars,res:r.res,used:new Set(r.used),task:null,first:true,hint:false,locked:false,pos:0};nextTask()}
 function nextTask(){
   if(play.i>=ROUND)return finish();
   let t,g=0;do{t=GEN[play.ex](play.L,play.R)}while(play.used.has(t.key)&&g++<25);
@@ -368,12 +371,12 @@ function correct(){
   good();const fb=document.getElementById('fb');const w=pick(PRAISE);fb.textContent=w;fb.className='fb good';
   if(t.after)t.after();
   say(w);
-  play.i++;setTimeout(()=>{if(ui.screen==='play'&&play)nextTask()},1500);
+  play.i++;saveRound();setTimeout(()=>{if(ui.screen==='play'&&play)nextTask()},1500);
 }
 function wrong(btn){play.first=false;bad();if(btn){btn.classList.remove('no');void btn.offsetWidth;btn.classList.add('no')}const fb=document.getElementById('fb');fb.textContent='Fast! Versuch es nochmal.';fb.className='fb try'}
 function finish(){
   const p=prof();const before=Math.floor(p.stars/10);
-  p.stars+=play.stars;const r=p.ex[play.ex]||{best:0,rounds:0};r.best=Math.max(r.best,play.stars);r.rounds++;p.ex[play.ex]=r;save();
+  p.stars+=play.stars;const r=p.ex[play.ex]||{best:0,rounds:0};r.best=Math.max(r.best,play.stars);r.rounds++;p.ex[play.ex]=r;store.round=null;save();
   const after=Math.min(STICKERS.length,Math.floor(p.stars/10));const fresh=after>Math.min(STICKERS.length,before)?STICKERS.slice(Math.min(STICKERS.length,before),after):[];
   setBody('');ui.screen='result';
   let h=topBar('')+`<section class="panel res"><h1>${play.stars>=8?'Fantastisch!':play.stars>=5?'Gut gemacht!':'Weiter so!'}</h1>
@@ -401,7 +404,7 @@ const ACT={
     if(v==='all')r=ALLROWS.slice();else{const n=+v;if(r.length===10)r=[n];else if(r.includes(n)){if(r.length>1)r=r.filter(x=>x!==n)}else r.push(n)}
     p.rows=r.sort((a,b)=>a-b);save();renderMenu()},
   start(b){startEx(b.dataset.ex)},
-  menu(){play=null;if(canSpeak)try{speechSynthesis.cancel()}catch(e){};renderMenu()},
+  menu(){play=null;store.round=null;save();if(canSpeak)try{speechSynthesis.cancel()}catch(e){};renderMenu()},
   again(){startEx(play.ex)},
   say(){say(play.task.speak,true)},
   clap(){const w=play.task.w;say(w.syl,true,.7)},
@@ -419,7 +422,8 @@ const ACT={
 function rerender(){const b=document.querySelector('[data-act=speak]');if(b){b.setAttribute('aria-pressed',store.speak);b.textContent='🔈 Vorlesen '+(store.speak?'an':'aus')}}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b||b.disabled)return;const f=ACT[b.dataset.act];if(f){e.preventDefault();f(b)}});
 
-if(prof())renderMenu();else renderHome();
+const R0=store.round;
+if(prof()&&R0&&R0.pid===store.current&&EX[R0.ex]&&R0.i<ROUND)resume();else if(prof())renderMenu();else renderHome();
 })();
 </script>
 
