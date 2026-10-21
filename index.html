@@ -96,6 +96,31 @@ h2{font-size:1.45rem}
 .arr i{width:22px;height:22px;border-radius:50%;background:var(--math)}
 .arr i:nth-child(odd){}
 @media (max-width:480px){.arr{grid-template-columns:repeat(var(--cols),18px);gap:5px}.arr i{width:18px;height:18px}}
+.zr{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.zr button{min-width:52px;min-height:44px;border:2px solid var(--ink);border-radius:12px;background:var(--card);font-family:var(--f-display);font-weight:600;font-size:1rem;padding:4px 10px}
+.zr button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.dz{display:flex;gap:6px;align-items:flex-end;flex-wrap:wrap;justify-content:center;padding:10px;border:3px solid var(--ink);border-radius:10px;background:var(--paper)}
+.dz .bar{display:grid;grid-template-rows:repeat(10,11px);gap:2px;padding:2px;border:2px solid var(--ink);border-radius:4px;background:var(--card)}
+.dz .bar i{width:12px;background:var(--math);border-radius:2px}
+.dz .ones{display:grid;grid-template-rows:repeat(5,16px);grid-auto-flow:column;gap:3px}
+.dz .ones i{width:16px;height:16px;border-radius:50%;background:var(--math)}
+.dz.b .bar i,.dz.b .ones i{background:var(--deu)}
+.dzp{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;font-family:var(--f-display);font-weight:700;font-size:1.8rem}
+.clock{width:min(240px,70vw);height:auto}
+.money{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center}
+.coin{width:66px;height:66px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:1.1rem;color:#2b2b2b;border:2px solid #8a8f96}
+.coin.e1{background:radial-gradient(circle,#D7DBE0 0 56%,#E2BE52 57%)}
+.coin.e2{background:radial-gradient(circle,#E2BE52 0 56%,#D7DBE0 57%)}
+.note{width:112px;height:60px;border-radius:6px;display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:1.4rem;color:#2b2b2b;border:2px solid rgba(0,0,0,.25);box-shadow:inset 0 0 0 5px rgba(255,255,255,.35)}
+.note.n5{background:#B7C2B0}.note.n10{background:#E8A08C}.note.n20{background:#93B5E2}.note.n50{background:#F2B565}
+.opts.two{grid-template-columns:repeat(2,1fr)}
+.opts.one{grid-template-columns:1fr}
+.opts .big.sm{font-size:1.3rem}
+.art-der{color:var(--math)}.art-die{color:var(--deu)}.art-das{color:var(--good)}
+.lgap{display:inline-block;min-width:.8em;border-bottom:4px solid var(--ink-soft);color:var(--good);text-align:center}
+.grd label{width:auto;padding:0 16px;font-family:var(--f-display);font-weight:600;font-size:1.15rem}
+.theme{display:flex;flex-direction:column;gap:10px}
+.theme .album span{width:56px;height:56px;font-size:2.1rem}
 .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
 .tile{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:14px;border-radius:18px;border:3px solid var(--c);background:var(--card);box-shadow:0 5px 0 var(--c);min-width:0}
 .tile:active{transform:translateY(4px);box-shadow:0 1px 0 var(--c)}
@@ -206,7 +231,21 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 
 const AVATARS=['🦊','🐻','🐼','🐨','🐯','🦁','🐸','🐙','🦄','🐢'];
-const STICKERS=['🐞','🦋','🐝','🐌','🦔','🐿️','🦉','🐬','🐳','🦒','🦓','🦩','🦚','🐠','🦕','🐲','🦜','🐧','🦭','🐉'];
+const OLDST=['🐞','🦋','🐝','🐌','🦔','🐿️','🦉','🐬','🐳','🦒','🦓','🦩','🦚','🐠','🦕','🐲','🦜','🐧','🦭','🐉'];
+const THEMES=[
+ ['Wiese',['🐞','🦋','🐝','🐌','🦔','🐿️','🦉','🐇','🌻','🍄','🐛','🌷']],
+ ['Meer',['🐬','🐳','🐠','🐙','🦀','🦈','🐚','🦭','🐡','🐧','🦑','🐋']],
+ ['Zoo',['🦒','🦓','🦩','🦚','🦜','🦛','🦏','🐒','🐆','🦘','🦥','🐫']],
+ ['Bauernhof',['🐄','🐖','🐓','🐐','🐴','🐕','🐈','🐣','🚜','🌽','🦃','🐏']],
+ ['Dinos & Drachen',['🦕','🦖','🐲','🐉','🌋','🦴','🦎','🌴','🥚','🪶','🔥','🗻']],
+ ['Weltall',['🚀','🪐','☄️','🛸','👽','🌍','🛰️','🌌','🌠','🔭','🌕','🧑‍🚀']],
+ ['Zauberwelt',['🦄','🧚','🧜‍♀️','🏰','🪄','🧙','💎','🎠','🔮','🧞','🌈','🍀']],
+ ['Leckereien',['🍦','🍩','🧁','🍪','🍒','🍕','🥨','🍭','🍫','🥞','🍿','🍬']],
+ ['Spiel & Spaß',['🎈','🪁','🎨','🧸','🎲','🛝','🥁','🎺','🛼','🏀','🎯','🏆']],
+ ['Unterwegs',['🚒','🚑','🚓','🛶','🛵','🚲','⛵','🚁','🚂','🎡','🏕️','🗺️']]
+];
+const ALLST=[...new Set(THEMES.flatMap(t=>t[1]))];
+function syncStickers(p){const earned=Math.min(ALLST.length,Math.floor(p.stars/10));if(!Array.isArray(p.stk))p.stk=OLDST.slice(0,Math.min(OLDST.length,earned));const fresh=[];while(p.stk.length<earned){const nx=ALLST.find(x=>!p.stk.includes(x));if(!nx)break;p.stk.push(nx);fresh.push(nx)}return fresh}
 
 const WORDS=[
  'Ball ⚽','Haus 🏠','Baum 🌳','Hund 🐶','Maus 🐭','Fisch 🐟','Kuh 🐮','Mond 🌙','Stern ⭐','Schuh 👟','Bus 🚌','Ei 🥚','Hut 🎩','Buch 📕','Brot 🍞','Herz ❤️','Pilz 🍄','Zug 🚂','Schaf 🐑','Frosch 🐸',
@@ -215,8 +254,25 @@ const WORDS=[
  'Re-gen-bo-gen 🌈','Was-ser-me-lo-ne 🍉','A-vo-ca-do 🥑'
 ].map(s=>{const [w,e]=s.split(' ');const syl=w.split('-');return {word:syl.join(''),syl,e,n:syl.length}});
 
+const AP=('Ball:der:Bälle Haus:das:Häuser Baum:der:Bäume Hund:der:Hunde Maus:die:Mäuse Fisch:der:Fische Kuh:die:Kühe Mond:der:Monde Stern:der:Sterne Schuh:der:Schuhe Bus:der:Busse Ei:das:Eier Hut:der:Hüte Buch:das:Bücher Brot:das:Brote Herz:das:Herzen Pilz:der:Pilze Zug:der:Züge Schaf:das:Schafe Frosch:der:Frösche '
+ +'Apfel:der:Äpfel Katze:die:Katzen Blume:die:Blumen Sonne:die:Sonnen Ente:die:Enten Auto:das:Autos Hose:die:Hosen Nase:die:Nasen Birne:die:Birnen Hase:der:Hasen Käse:der:- Schnecke:die:Schnecken Tasse:die:Tassen Kuchen:der:Kuchen Zebra:das:Zebras Tiger:der:Tiger Biene:die:Bienen Löwe:der:Löwen Krone:die:Kronen Taxi:das:Taxis Kürbis:der:Kürbisse Kamel:das:Kamele Pinsel:der:Pinsel Rose:die:Rosen '
+ +'Banane:die:Bananen Tomate:die:Tomaten Rakete:die:Raketen Gitarre:die:Gitarren Elefant:der:Elefanten Papagei:der:Papageien Karotte:die:Karotten Krokodil:das:Krokodile Schmetterling:der:Schmetterlinge Zitrone:die:Zitronen Telefon:das:Telefone Pinguin:der:Pinguine Ananas:die:- Erdbeere:die:Erdbeeren Hubschrauber:der:Hubschrauber Schildkröte:die:Schildkröten Regenbogen:der:Regenbögen Wassermelone:die:Wassermelonen Avocado:die:Avocados').split(' ');
+AP.forEach(x=>{const [w,a,pl]=x.split(':');const o=WORDS.find(y=>y.word===w);if(o){o.art=a;if(pl!=='-')o.pl=pl}});
+const GRADE={
+ 1:{m:['m_count','m_plus','m_minus','m_comp','m_fill','m_dbl','m_nb','m_seq'],d:['d_syl','d_anl','d_word','d_pic','d_puz']},
+ 2:{m:['m_count','m_plus','m_minus','m_comp','m_fill','m_dbl','m_nb','m_seq'],x:['x_mul','x_gap','x_div'],u:['u_clock','u_money'],d:['d_art','d_plu','d_gap','d_puz','d_word']}
+};
 const EX={
- m_count:{s:'m',name:'Zählen',desc:'Wie viele Punkte?',ic:'●●●'},
+ m_dbl:{s:'m',name:'Verdoppeln',desc:'Doppelt und halb',ic:'7 + 7'},
+ m_nb:{s:'m',name:'Nachbarzahlen',desc:'Was kommt davor oder danach?',ic:'? 8 ?'},
+ m_seq:{s:'m',name:'Zahlenfolgen',desc:'Wie geht es weiter?',ic:'2 4 6 ?'},
+ u_clock:{s:'m',u:1,name:'Uhrzeit',desc:'Wie spät ist es?',ic:'halb 4'},
+ u_money:{s:'m',u:1,name:'Geld',desc:'Wie viel Euro sind das?',ic:'12 €'},
+ d_anl:{s:'d',name:'Anlaute',desc:'Mit welchem Laut beginnt es?',ic:'🍎 → A'},
+ d_art:{s:'d',name:'der, die, das',desc:'Den richtigen Artikel finden',ic:'der die das'},
+ d_plu:{s:'d',name:'Mehrzahl',desc:'Einer und viele',ic:'Hund → Hunde'},
+ d_gap:{s:'d',name:'Buchstaben-Lücke',desc:'Welcher Buchstabe fehlt?',ic:'B_ll'},
+ m_count:{s:'m',name:'Zählen',desc:'Punkte, Zehner und Einer',ic:'●●●'},
  m_plus:{s:'m',name:'Plus',desc:'Zusammenzählen',ic:'3 + 4'},
  m_minus:{s:'m',name:'Minus',desc:'Abziehen',ic:'9 − 2'},
  m_comp:{s:'m',name:'Vergleichen',desc:'Kleiner, gleich, größer',ic:'&lt; = &gt;'},
@@ -261,21 +317,55 @@ function numOpts(ans,max){const s=new Set([ans]);let t=0;while(s.size<4&&t<80){t
 function arr(r,c){return `<div class="arr" style="--cols:${c}" aria-hidden="true">${'<i></i>'.repeat(r*c)}</div><span class="muted">${r} Reihen mit je ${c} Punkten</span>`}
 function mulOpts(a,b){const ans=a*b;const c=new Set([a*(b+1),a*(b-1),(a+1)*b,(a-1)*b,ans+1,ans-1,ans+10,ans-10].filter(v=>v>=0&&v!==ans));const o=[ans,...shuffle([...c]).slice(0,3)];return shuffle(o).map(v=>({html:String(v),v}))}
 const ALLROWS=[1,2,3,4,5,6,7,8,9,10];
+const ZR=[10,20,30,40,50,60,70,80,90,100];
+function dienes(n,c){const t=Math.floor(n/10),o=n%10;let h=`<div class="dz ${c==='b'?'b':''}" aria-hidden="true">`;for(let i=0;i<t;i++)h+=`<span class="bar">${'<i></i>'.repeat(10)}</span>`;if(o)h+=`<span class="ones">${'<i></i>'.repeat(o)}</span>`;if(!n)h+='<span class="muted">0</span>';return h+'</div>'}
+function one(n,L,c){return L<=20?field(L,cells(L,[[n,c||'a']])):dienes(n,c)}
+function pair(a,b,L,op){if(L<=20)return op==='-'?field(L,cells(L,[[a-b,'a'],[b,'x']])):field(L,cells(L,[[a,'a'],[b,'b']]));
+  return op==='-'?`<div class="dzp">${dienes(a,'a')}</div><span class="muted">Nimm ${b} weg.</span>`:`<div class="dzp">${dienes(a,'a')}<span>+</span>${dienes(b,'b')}</div>`}
+function clockSVG(h,m){const ha=((h%12)+m/60)*30,ma=m*6;let t='';for(let i=1;i<=12;i++){const a=i*30*Math.PI/180;t+=`<text x="${100+Math.sin(a)*74}" y="${100-Math.cos(a)*74+7}" text-anchor="middle" font-size="20" font-weight="700" fill="var(--ink)" font-family="var(--f-display)">${i}</text>`}
+  let ticks='';for(let i=0;i<60;i++){const a=i*6*Math.PI/180,r1=i%5?90:86;ticks+=`<line x1="${100+Math.sin(a)*r1}" y1="${100-Math.cos(a)*r1}" x2="${100+Math.sin(a)*94}" y2="${100-Math.cos(a)*94}" stroke="var(--ink)" stroke-width="${i%5?1.5:3}"/>`}
+  return `<svg class="clock" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="96" fill="var(--card)" stroke="var(--ink)" stroke-width="5"/>${ticks}${t}
+  <line x1="100" y1="100" x2="100" y2="52" stroke="var(--deu)" stroke-width="9" stroke-linecap="round" transform="rotate(${ha} 100 100)"/>
+  <line x1="100" y1="100" x2="100" y2="24" stroke="var(--math)" stroke-width="5" stroke-linecap="round" transform="rotate(${ma} 100 100)"/><circle cx="100" cy="100" r="7" fill="var(--ink)"/></svg>`}
+const hh=h=>((h-1+12)%12)+1;
+function timeText(h,m){h=hh(h);return m===0?`${h} Uhr`:m===30?`halb ${hh(h+1)}`:m===15?`Viertel nach ${h}`:`Viertel vor ${hh(h+1)}`}
+function umlaut(w){const i=w.lastIndexOf('au');if(i>=0)return w.slice(0,i)+'äu'+w.slice(i+2);const m={a:'ä',o:'ö',u:'ü',A:'Ä',O:'Ö',U:'Ü'};for(let k=w.length-1;k>=0;k--)if(m[w[k]])return w.slice(0,k)+m[w[k]]+w.slice(k+1);return w}
+function anlaut(w){const x=w.word;if(/^Sch/.test(x))return 'Sch';if(/^(Ei|Au|Eu)/.test(x))return x.slice(0,2);return x[0]}
 function wordsBy(n){return WORDS.filter(w=>w.n===n)}
 
 /* ---------- Aufgaben ---------- */
 const GEN={
- m_count(L){const n=rnd(1,L);return{instr:'Wie viele Punkte siehst du?',speak:'Wie viele Punkte siehst du?',stage:field(L,cells(L,[[n,'a']])),opts:numOpts(n,L),ans:n,key:'c'+n}},
- m_plus(L){const a=rnd(1,L-1),b=rnd(1,L-a);return{instr:'Rechne aus.',speak:`${a} plus ${b} ist gleich?`,stage:`<div class="eq">${a} + ${b} = <span class="gap" id="gap">?</span></div>`,hint:field(L,cells(L,[[a,'a'],[b,'b']])),opts:numOpts(a+b,L),ans:a+b,key:a+'+'+b,fill:true}},
- m_minus(L){const a=rnd(2,L),b=rnd(1,a-1);return{instr:'Rechne aus.',speak:`${a} minus ${b} ist gleich?`,stage:`<div class="eq">${a} − ${b} = <span class="gap" id="gap">?</span></div>`,hint:field(L,cells(L,[[a-b,'a'],[b,'x']])),opts:numOpts(a-b,L),ans:a-b,key:a+'-'+b,fill:true}},
+ m_count(L){const n=rnd(1,L);const big=L>20;return{instr:big?'Wie viele sind das? Eine Stange hat 10.':'Wie viele Punkte siehst du?',speak:big?'Wie viele sind das? Jede Stange hat zehn.':'Wie viele Punkte siehst du?',stage:one(n,L),opts:numOpts(n,L),ans:n,key:'c'+n}},
+ m_plus(L){const a=rnd(1,L-1),b=rnd(1,L-a);return{instr:'Rechne aus.',speak:`${a} plus ${b} ist gleich?`,stage:`<div class="eq">${a} + ${b} = <span class="gap" id="gap">?</span></div>`,hint:pair(a,b,L,'+'),opts:numOpts(a+b,L),ans:a+b,key:a+'+'+b,fill:true}},
+ m_minus(L){const a=rnd(2,L),b=rnd(1,a-1);return{instr:'Rechne aus.',speak:`${a} minus ${b} ist gleich?`,stage:`<div class="eq">${a} − ${b} = <span class="gap" id="gap">?</span></div>`,hint:pair(a,b,L,'-'),opts:numOpts(a-b,L),ans:a-b,key:a+'-'+b,fill:true}},
  m_comp(L){const a=rnd(0,L),b=Math.random()<.25?a:rnd(0,L);const ans=a<b?'<':a>b?'>':'=';
    return{instr:'Welches Zeichen passt?',speak:`Welches Zeichen passt zwischen ${a} und ${b}? Kleiner, gleich oder größer?`,stage:`<div class="eq">${a} <span class="gap" id="gap">?</span> ${b}</div>`,
-   hint:`<div class="cmp"><span class="lbl">${a}</span>${field(L,cells(L,[[a,'a']]))}<span class="lbl">${b}</span>${field(L,cells(L,[[b,'b']]))}</div>`,
+   hint:`<div class="cmp"><span class="lbl">${a}</span>${one(a,L,'a')}<span class="lbl">${b}</span>${one(b,L,'b')}</div>`,
    opts:[{html:'&lt;<small>kleiner</small>',v:'<',t:'&lt;'},{html:'=<small>gleich</small>',v:'=',t:'='},{html:'&gt;<small>größer</small>',v:'>',t:'&gt;'}],three:true,ans,key:a+'?'+b,fill:true}},
- m_fill(L){const a=rnd(1,L-1);return{instr:`Was fehlt bis ${L}?`,speak:`${a} und wie viel sind zusammen ${L}?`,stage:`<div class="eq">${a} + <span class="gap" id="gap">?</span> = ${L}</div>`,hint:field(L,cells(L,[[a,'a'],[L-a,'e']])),opts:numOpts(L-a,L),ans:L-a,key:'f'+a,fill:true}},
+ m_fill(L){const a=rnd(1,L-1);return{instr:`Was fehlt bis ${L}?`,speak:`${a} und wie viel sind zusammen ${L}?`,stage:`<div class="eq">${a} + <span class="gap" id="gap">?</span> = ${L}</div>`,hint:L<=20?field(L,cells(L,[[a,'a'],[L-a,'e']])):dienes(a,'a'),opts:numOpts(L-a,L),ans:L-a,key:'f'+a,fill:true}},
  x_mul(L,R){const a=pick(R),b=rnd(1,10);const [x,y]=Math.random()<.5?[b,a]:[a,b];return{instr:'Rechne aus.',speak:`${x} mal ${y} ist gleich?`,stage:`<div class="eq">${x} · ${y} = <span class="gap" id="gap">?</span></div>`,hint:arr(x,y),opts:mulOpts(a,b),ans:a*b,key:x+'*'+y,fill:true}},
  x_gap(L,R){const a=pick(R),b=rnd(1,10);return{instr:'Welche Zahl fehlt?',speak:`${a} mal wie viel ist ${a*b}?`,stage:`<div class="eq">${a} · <span class="gap" id="gap">?</span> = ${a*b}</div>`,hint:arr(a,b),opts:numOpts(b,10),ans:b,key:a+'g'+b,fill:true}},
  x_div(L,R){const a=pick(R),b=rnd(1,10),c=a*b;return{instr:'Rechne aus.',speak:`${c} geteilt durch ${a} ist gleich?`,stage:`<div class="eq">${c} : ${a} = <span class="gap" id="gap">?</span></div>`,hint:arr(a,b),opts:numOpts(b,10),ans:b,key:c+':'+a,fill:true}},
+ m_dbl(L){const a=rnd(1,Math.max(1,Math.floor(L/2)));if(Math.random()<.5)return{instr:'Verdopple die Zahl.',speak:`Verdopple ${a}. ${a} plus ${a} ist gleich?`,stage:`<div class="eq">${a} + ${a} = <span class="gap" id="gap">?</span></div>`,hint:pair(a,a,L,'+'),opts:numOpts(2*a,L),ans:2*a,key:'d'+a,fill:true};
+   return{instr:'Was ist die Hälfte?',speak:`Was ist die Hälfte von ${2*a}?`,stage:`<div class="eq" style="font-size:clamp(1.8rem,8vw,3rem)">Die Hälfte von ${2*a} ist <span class="gap" id="gap">?</span></div>`,hint:pair(a,a,L,'+'),opts:numOpts(a,L),ans:a,key:'h'+a,fill:true}},
+ m_nb(L){const n=rnd(1,L-1);const after=Math.random()<.5;return{instr:after?'Welche Zahl kommt danach?':'Welche Zahl kommt davor?',speak:after?`Welche Zahl kommt direkt nach ${n}?`:`Welche Zahl kommt direkt vor ${n}?`,stage:after?`<div class="eq">${n}, <span class="gap" id="gap">?</span></div>`:`<div class="eq"><span class="gap" id="gap">?</span>, ${n}</div>`,opts:numOpts(after?n+1:n-1,L),ans:after?n+1:n-1,key:(after?'n':'v')+n,fill:true}},
+ m_seq(L){const steps=(L<=10?[1,2]:L<=20?[1,2,3,5]:[2,3,5,10,10]).filter(s=>4*s<=L);const st=pick(steps);let a0=rnd(0,L-4*st);let seq=[0,1,2,3,4].map(i=>a0+i*st);if(Math.random()<.3)seq=seq.reverse();const gi=Math.random()<.7?4:rnd(1,3);const ans=seq[gi];
+   return{instr:'Wie geht die Zahlenfolge weiter?',speak:'Wie geht die Zahlenfolge weiter? Welche Zahl fehlt?',stage:`<div class="eq" style="font-size:clamp(2rem,8.5vw,3.4rem)">${seq.map((v,i)=>i===gi?'<span class="gap" id="gap">?</span>':v).join('<span class="muted">,</span>')}</div>`,opts:numOpts(ans,L),ans,key:seq.join('.'),fill:true}},
+ u_clock(){const h=rnd(1,12),m=pick([0,0,30,30,15,45]);const ans=timeText(h,m);const c=new Set([timeText(h+1,m),timeText(h-1,m),timeText(h,(m+30)%60),timeText(h,m===15?45:m===45?15:m===0?30:0),timeText(h+1,(m+30)%60)]);c.delete(ans);
+   const opts=shuffle([ans,...shuffle([...c]).slice(0,3)]).map(v=>({html:v,v,cls:'w sm'}));return{instr:'Wie spät ist es?',speak:'Wie spät ist es? Der kurze Zeiger zeigt die Stunde, der lange die Minuten.',stage:clockSVG(h,m),opts,two:true,ans,key:h+':'+m}},
+ u_money(){const D=[1,2,5,10,20,50];let items=[],sum=0;const k=rnd(2,5);for(let i=0;i<k;i++){const ok=D.filter(d=>sum+d<=100);const d=pick(ok);items.push(d);sum+=d}items.sort((a,b)=>b-a);
+   const show=items.map(d=>d<=2?`<span class="coin e${d}">${d} €</span>`:`<span class="note n${d}">${d} €</span>`).join('');const o=numOpts(sum,100).map(x=>({html:x.v+' €',v:x.v,t:String(x.v)}));
+   return{instr:'Wie viel Geld ist das?',speak:'Wie viel Geld ist das? Zähle zuerst die Scheine, dann die Münzen.',stage:`<div class="money">${show}</div><div class="eq" style="font-size:clamp(2rem,8vw,3rem)">= <span class="gap" id="gap">?</span> €</div>`,opts:o,ans:sum,key:items.join('+'),fill:true}},
+ d_anl(){const w=pick(WORDS);const a=anlaut(w);const pool=shuffle([...new Set(WORDS.map(anlaut))].filter(x=>x!==a)).slice(0,2);const opts=shuffle([a,...pool]).map(v=>({html:v,v,cls:'w'}));
+   return{instr:'Mit welchem Laut beginnt das Wort?',speak:`Hör genau hin: ${w.word}. Mit welchem Laut beginnt das Wort?`,stage:`<div class="pic">${w.e}</div><div class="word" id="sw" hidden>${sylHTML(w)}</div>`,opts,three:true,ans:a,key:w.word,w,after(){document.getElementById('sw').hidden=false}}},
+ d_art(){const w=pick(WORDS.filter(x=>x.art));const opts=['der','die','das'].map(v=>({html:v,v,cls:'w art-'+v}));
+   return{instr:'Welcher Artikel passt?',speak:`Der, die oder das? ${w.word}.`,stage:`<div class="pic">${w.e}</div><div class="word"><span class="lgap" id="ag">&nbsp;?&nbsp;</span> ${esc(w.word)}</div>`,opts,three:true,ans:w.art,key:w.word,w,after(){const g=document.getElementById('ag');g.textContent=w.art;g.className='art-'+w.art}}},
+ d_plu(){const w=pick(WORDS.filter(x=>x.pl));const W=w.word,U=umlaut(W);let c=[W+'e',W+'en',W+'n',W+'s',W+'er',U+'e',U+'er',U,W].filter(x=>x!==w.pl&&!(W.endsWith('e')&&(x===W+'e'||x===W+'en')));c=shuffle([...new Set(c)]).slice(0,2);
+   const opts=shuffle([w.pl,...c]).map(v=>({html:'die '+esc(v),v,cls:'w sm'}));
+   return{instr:'Wie heißt die Mehrzahl?',speak:`Wie heißt die Mehrzahl von ${w.word}? Einer, viele.`,stage:`<div class="pic" id="pp">${w.e}</div><div class="word" style="font-size:clamp(1.8rem,8vw,2.8rem)">${w.art} ${esc(W)}</div>`,opts,one:true,ans:w.pl,key:W,w,after(){document.getElementById('pp').textContent=w.e+w.e+w.e}}},
+ d_gap(){const w=pick(WORDS.filter(x=>x.word.length>=3));const W=w.word;const idx=[...W].map((ch,i)=>i).filter(i=>i>0&&!/[chCH]/.test(W[i]));const i=pick(idx);const ch=W[i];
+   const V='aeiouäöü',K='bdfgklmnprstz';const pool=(V.includes(ch)?V:K).split('').filter(x=>x!==ch);const opts=shuffle([ch,...shuffle(pool).slice(0,2)]).map(v=>({html:v,v,cls:'w'}));
+   return{instr:'Welcher Buchstabe fehlt?',speak:`Welcher Buchstabe fehlt im Wort ${W}?`,stage:`<div class="pic">${w.e}</div><div class="word">${esc(W.slice(0,i))}<span class="lgap" id="lg">&nbsp;</span>${esc(W.slice(i+1))}</div>`,opts,three:true,ans:ch,key:W+i,w,after(){document.getElementById('lg').textContent=ch}}},
  d_syl(){const n=pick([1,1,2,2,2,3,3,3,4]);const w=pick(wordsBy(n));return{instr:'Wie viele Silben hat das Wort?',speak:`Wie viele Silben hat das Wort ${w.word}? Klatsche mit!`,stage:`<div class="pic">${w.e}</div><div class="word" id="sw">${sylHTML(w,'plain')}</div><button class="btn-s sylbtn" data-act="clap">👏 Silben schwingen</button>`,opts:[1,2,3,4].map(v=>({html:String(v),v})),ans:n,key:w.word,w,after(){document.getElementById('sw').innerHTML=sylHTML(w,'arcs')}}},
  d_word(){const w=pick(WORDS);const pool=shuffle(WORDS.filter(x=>x!==w&&Math.abs(x.n-w.n)<=1)).slice(0,2);const opts=shuffle([w,...pool]).map(x=>({html:sylHTML(x),v:x.word,cls:'w'}));return{instr:'Welches Wort passt zum Bild?',speak:'Welches Wort passt zum Bild?',stage:`<div class="pic">${w.e}</div>`,opts,three:true,ans:w.word,key:w.word,w}},
  d_pic(){const w=pick(WORDS);const pool=shuffle(WORDS.filter(x=>x!==w)).slice(0,2);const opts=shuffle([w,...pool]).map(x=>({html:x.e,v:x.word,cls:'pic',label:x.word}));return{instr:'Lies das Wort. Welches Bild passt?',speak:'Lies das Wort. Welches Bild passt dazu?',stage:`<div class="word">${sylHTML(w,'arcs')}</div>`,opts,three:true,ans:w.word,key:w.word,w}},
@@ -299,13 +389,14 @@ function setBody(c){document.body.className=c||''}
 function renderHome(){
   setBody('');ui.screen='home';
   const ps=store.profiles;
-  let h=topBar('')+`<header><h1>Wer lernt heute?</h1><p class="muted" style="margin:.4em 0 0">Mathe bis 20, kleines Einmaleins und erste Wörter mit Silben. Jedes Kind sammelt eigene Sterne und Sticker.</p></header>`;
-  h+='<div class="kids">'+ps.map(p=>`<button class="kid" data-act="${ui.edit?'askdel':'pick'}" data-id="${p.id}"><span class="av">${p.av}</span>${esc(p.name)}<span class="st">⭐ ${p.stars}</span>${ui.edit?'<span class="del" aria-label="Löschen">✕</span>':''}</button>`).join('')
+  let h=topBar('')+`<header><h1>Wer lernt heute?</h1><p class="muted" style="margin:.4em 0 0">Mathe, Deutsch, Uhr und Geld für Klasse 1 und 2. Jedes Kind sammelt eigene Sterne und Sticker.</p></header>`;
+  h+='<div class="kids">'+ps.map(p=>`<button class="kid" data-act="${ui.edit?'askdel':'pick'}" data-id="${p.id}"><span class="av">${p.av}</span>${esc(p.name)}<span class="st">Klasse ${gradeOf(p)} · ⭐ ${p.stars}</span>${ui.edit?'<span class="del" aria-label="Löschen">✕</span>':''}</button>`).join('')
     +(ui.edit?'':`<button class="kid add" data-act="newform"><span class="av">+</span>Neues Kind</button>`)+'</div>';
   if(ui.confirm){const p=ps.find(x=>x.id===ui.confirm);if(p)h+=`<div class="confirm"><strong>${esc(p.name)} wirklich löschen? Alle Sterne und Sticker gehen verloren.</strong><div class="row"><button class="big" data-act="delyes" style="background:var(--deu);color:#fff;border-color:var(--deu);box-shadow:0 5px 0 #8f2a21">Ja, löschen</button><button class="big" data-act="delno">Nein</button></div></div>`}
   if(ui.form||!ps.length){
     h+=`<form class="panel" id="nf"><h2>Neues Kind anlegen</h2>
     <label for="nm">Name</label><input type="text" id="nm" maxlength="16" autocomplete="off" placeholder="z. B. Mia" required>
+    <span>Klasse</span><div class="avs grd"><label><input type="radio" name="gr" value="1" checked><span>Klasse 1</span></label><label><input type="radio" name="gr" value="2"><span>Klasse 2</span></label></div>
     <span>Tier aussuchen</span><div class="avs">${AVATARS.map((a,i)=>`<label><input type="radio" name="av" id="av${i}" value="${a}" ${a===ui.avatar?'checked':''}><span>${a}</span></label>`).join('')}</div>
     <div class="row"><button class="big primary" type="submit">Los geht's</button>${ps.length?'<button class="big" type="button" data-act="cancelform">Abbrechen</button>':''}</div></form>`;
   }
@@ -315,29 +406,41 @@ function renderHome(){
   const f=document.getElementById('nf');
   if(f)f.addEventListener('submit',e=>{e.preventDefault();const name=document.getElementById('nm').value.trim();if(!name)return;
     const av=(f.querySelector('input[name=av]:checked')||{}).value||AVATARS[0];
-    const p={id:'k'+Date.now().toString(36),name,av,stars:0,level:10,ex:{}};store.profiles.push(p);store.current=p.id;ui.form=false;save();say(`Hallo ${name}!`);renderMenu()});
+    const gr=+((f.querySelector('input[name=gr]:checked')||{}).value||1);const p={id:'k'+Date.now().toString(36),name,av,stars:0,level:gr===2?100:10,grade:gr,ex:{},stk:[]};store.profiles.push(p);store.current=p.id;ui.form=false;save();say(`Hallo ${name}!`);renderMenu()});
 }
 
 /* Übersicht */
+function gradeOf(p){if(!p.grade)p.grade=Object.keys(p.ex||{}).some(k=>k[0]==='x')?2:1;return p.grade}
 function renderMenu(){
   const p=prof();if(!p)return renderHome();
   setBody('');ui.screen='menu';
-  const owned=Math.min(STICKERS.length,Math.floor(p.stars/10));
+  const g=gradeOf(p);if(syncStickers(p).length||true)save();
+  const G=GRADE[g];
   const toNext=10-(p.stars%10);
   const tile=id=>{const e=EX[id],r=p.ex[id];return `<button class="tile ${e.s==='m'?'m':'dd'}" data-act="start" data-ex="${id}"><span class="ic">${e.ic}</span><b>${e.name}</b><small>${e.desc}</small><span class="best">${r?`Bestes: ${r.best} von ${ROUND} ⭐ · ${r.rounds}× geübt`:'Noch nicht geübt'}</span></button>`};
   let h=topBar('<button class="btn-s" data-act="home">← Kinder</button>');
-  h+=`<header><h1>Hallo, ${esc(p.name)}!</h1></header>`;
-  h+=`<section class="panel"><div class="subj-head"><h2>Sticker-Album</h2><span class="muted">${owned<STICKERS.length?`Noch ${toNext} ⭐ bis zum nächsten Sticker`:'Alle Sticker gesammelt!'}</span></div>
-     <div class="album">${STICKERS.map((s,i)=>i<owned?`<span>${s}</span>`:`<span class="lock">${(i+1)*10}</span>`).slice(0,Math.max(8,owned+3)).join('')}</div></section>`;
-  h+=`<section class="subj"><div class="subj-head"><h2><span class="tag" style="background:var(--math)"></span>Mathe</h2>
-     <div class="seg" role="group" aria-label="Zahlenraum"><button data-act="level" data-l="10" aria-pressed="${p.level===10}">bis 10</button><button data-act="level" data-l="20" aria-pressed="${p.level===20}">bis 20</button></div></div>
-     <div class="tiles">${['m_count','m_plus','m_minus','m_comp','m_fill'].map(tile).join('')}</div></section>`;
-  const rows=p.rows||ALLROWS;
+  h+=`<header class="subj-head"><h1 style="flex:1">Hallo, ${esc(p.name)}!</h1><div class="seg" role="group" aria-label="Klasse"><button data-act="grade" data-g="1" aria-pressed="${g===1}">Klasse 1</button><button data-act="grade" data-g="2" aria-pressed="${g===2}">Klasse 2</button></div></header>`;
+  const last=p.stk.slice(-8).reverse();
+  h+=`<section class="panel"><div class="subj-head"><h2>Sticker-Album</h2><span class="muted">${p.stk.length} von ${ALLST.length} · ${p.stk.length<ALLST.length?`noch ${toNext} ⭐ bis zum nächsten`:'alle gesammelt!'}</span></div>
+     <div class="album">${last.length?last.map(x=>`<span>${x}</span>`).join(''):'<span class="lock">?</span><span class="muted" style="font-size:.95rem">Für je 10 Sterne gibt es einen Sticker.</span>'}</div>
+     <div class="row"><button class="btn-s" data-act="album">Ganzes Album ansehen</button></div></section>`;
+  h+=`<section class="subj"><div class="subj-head"><h2><span class="tag" style="background:var(--math)"></span>Mathe</h2></div>
+     <div class="zr" role="group" aria-label="Zahlenraum"><span class="muted">Zahlenraum bis:</span>${ZR.map(z=>`<button data-act="level" data-l="${z}" aria-pressed="${p.level===z}">${z}</button>`).join('')}</div>
+     <div class="tiles">${G.m.map(tile).join('')}</div></section>`;
+  if(G.x){const rows=p.rows||ALLROWS;
   h+=`<section class="subj"><div class="subj-head"><h2><span class="tag" style="background:var(--math)"></span>Kleines Einmaleins</h2></div>
      <div class="rowsel" role="group" aria-label="Welche Reihen üben?"><span class="muted">Reihen:</span>${ALLROWS.map(r=>`<button data-act="row" data-r="${r}" aria-pressed="${rows.includes(r)}">${r}er</button>`).join('')}<button data-act="row" data-r="all" aria-pressed="${rows.length===10}">alle</button></div>
-     <div class="tiles">${['x_mul','x_gap','x_div'].map(tile).join('')}</div></section>`;
+     <div class="tiles">${G.x.map(tile).join('')}</div></section>`}
+  if(G.u)h+=`<section class="subj"><div class="subj-head"><h2><span class="tag" style="background:var(--math)"></span>Uhr und Geld</h2></div><div class="tiles">${G.u.map(tile).join('')}</div></section>`;
   h+=`<section class="subj"><div class="subj-head"><h2><span class="tag" style="background:var(--deu)"></span>Deutsch</h2></div>
-     <div class="tiles">${['d_syl','d_word','d_pic','d_puz'].map(tile).join('')}</div></section>`;
+     <div class="tiles">${G.d.map(tile).join('')}</div></section>`;
+  app.innerHTML=h;
+}
+function renderAlbum(){
+  const p=prof();if(!p)return renderHome();setBody('');ui.screen='album';syncStickers(p);
+  let h=topBar('<button class="btn-s" data-act="back">← Übersicht</button>')+`<header><h1>Sticker-Album</h1><p class="muted" style="margin:.4em 0 0">${p.stk.length} von ${ALLST.length} Stickern gesammelt. Für je 10 Sterne kommt ein neuer dazu.</p></header>`;
+  THEMES.forEach(([name,list])=>{const n=list.filter(x=>p.stk.includes(x)).length;
+    h+=`<section class="panel theme"><div class="subj-head"><h2>${name}</h2><span class="muted">${n} von ${list.length}</span></div><div class="album">${list.map(x=>p.stk.includes(x)?`<span>${x}</span>`:'<span class="lock">?</span>').join('')}</div></section>`});
   app.innerHTML=h;
 }
 
@@ -355,12 +458,12 @@ function renderPlay(){
   const t=play.task,e=EX[play.ex];setBody(e.s==='m'?'':'d');ui.screen='play';
   const dots=Array.from({length:ROUND},(_,i)=>`<i class="${i<play.res.length?(play.res[i]?'y':'n'):i===play.i?'cur':''}"></i>`).join('');
   let h=topBar(`<button class="btn-s" data-act="menu">← Übersicht</button>`);
-  h+=`<div class="row" style="justify-content:space-between"><h2>${e.name}${e.x?` <span class="muted" style="font-size:1rem">${play.R.length===10?'alle Reihen':play.R.map(r=>r+'er').join(', ')}</span>`:e.s==='m'?` <span class="muted" style="font-size:1rem">bis ${play.L}</span>`:''}</h2><div class="dots" aria-label="Aufgabe ${play.i+1} von ${ROUND}">${dots}</div></div>`;
+  h+=`<div class="row" style="justify-content:space-between"><h2>${e.name}${e.x?` <span class="muted" style="font-size:1rem">${play.R.length===10?'alle Reihen':play.R.map(r=>r+'er').join(', ')}</span>`:e.u?'':e.s==='m'?` <span class="muted" style="font-size:1rem">bis ${play.L}</span>`:''}</h2><div class="dots" aria-label="Aufgabe ${play.i+1} von ${ROUND}">${dots}</div></div>`;
   h+=`<div class="card ${e.s==='m'?'mm':'ddd'}" id="card"><div class="instr"><p>${t.instr}</p><button class="spk" data-act="say" aria-label="Vorlesen">${SPK}</button></div>
      <div class="stage">${t.stage}</div>`;
-  if(t.hint)h+=`<button class="btn-s hintbtn" data-act="hint" aria-expanded="false">Punkte zeigen</button><div id="hint" class="stage" hidden style="min-height:0">${t.hint}</div>`;
+  if(t.hint)h+=`<button class="btn-s hintbtn" data-act="hint" aria-expanded="false">Hilfe zeigen</button><div id="hint" class="stage" hidden style="min-height:0">${t.hint}</div>`;
   if(t.puzzle)h+=`<div class="tilesyl">${t.puzzle.map(i=>`<button class="big" data-act="tile" data-s="${esc(t.w.syl[i])}">${esc(t.w.syl[i])}</button>`).join('')}</div>`;
-  else h+=`<div class="opts ${t.three?'three':''}">${t.opts.map((o,i)=>`<button class="big ${o.cls||''}" data-act="ans" data-i="${i}" ${o.label?`aria-label="${esc(o.label)}"`:''}>${o.html}</button>`).join('')}</div>`;
+  else h+=`<div class="opts ${t.one?'one':t.three?'three':t.two?'two':''}">${t.opts.map((o,i)=>`<button class="big ${o.cls||''}" data-act="ans" data-i="${i}" ${o.label?`aria-label="${esc(o.label)}"`:''}>${o.html}</button>`).join('')}</div>`;
   h+=`<div class="fb" id="fb" aria-live="polite"></div></div>`;
   app.innerHTML=h;
 }
@@ -375,9 +478,9 @@ function correct(){
 }
 function wrong(btn){play.first=false;bad();if(btn){btn.classList.remove('no');void btn.offsetWidth;btn.classList.add('no')}const fb=document.getElementById('fb');fb.textContent='Fast! Versuch es nochmal.';fb.className='fb try'}
 function finish(){
-  const p=prof();const before=Math.floor(p.stars/10);
+  const p=prof();syncStickers(p);
   p.stars+=play.stars;const r=p.ex[play.ex]||{best:0,rounds:0};r.best=Math.max(r.best,play.stars);r.rounds++;p.ex[play.ex]=r;store.round=null;save();
-  const after=Math.min(STICKERS.length,Math.floor(p.stars/10));const fresh=after>Math.min(STICKERS.length,before)?STICKERS.slice(Math.min(STICKERS.length,before),after):[];
+  const fresh=syncStickers(p);save();
   setBody('');ui.screen='result';
   let h=topBar('')+`<section class="panel res"><h1>${play.stars>=8?'Fantastisch!':play.stars>=5?'Gut gemacht!':'Weiter so!'}</h1>
     <p style="margin:0;font-size:1.3rem">Du hast <strong>${play.stars} von ${ROUND}</strong> Sternen gesammelt.</p>
@@ -400,6 +503,9 @@ const ACT={
   delyes(){store.profiles=store.profiles.filter(p=>p.id!==ui.confirm);if(store.current===ui.confirm)store.current=null;ui.confirm=null;if(!store.profiles.length)ui.edit=false;save();renderHome()},
   delno(){ui.confirm=null;renderHome()},
   level(b){const p=prof();p.level=+b.dataset.l;save();renderMenu()},
+  grade(b){const p=prof();const g=+b.dataset.g;if(g===p.grade)return;p.grade=g;if(g===2&&p.level<=20)p.level=100;if(g===1&&p.level>20)p.level=20;save();renderMenu()},
+  album(){renderAlbum()},
+  back(){renderMenu()},
   row(b){const p=prof();let r=(p.rows||ALLROWS).slice();const v=b.dataset.r;
     if(v==='all')r=ALLROWS.slice();else{const n=+v;if(r.length===10)r=[n];else if(r.includes(n)){if(r.length>1)r=r.filter(x=>x!==n)}else r.push(n)}
     p.rows=r.sort((a,b)=>a-b);save();renderMenu()},
@@ -408,7 +514,7 @@ const ACT={
   again(){startEx(play.ex)},
   say(){say(play.task.speak,true)},
   clap(){const w=play.task.w;say(w.syl,true,.7)},
-  hint(b){const el=document.getElementById('hint');el.hidden=!el.hidden;b.setAttribute('aria-expanded',String(!el.hidden));b.textContent=el.hidden?'Punkte zeigen':'Punkte verstecken'},
+  hint(b){const el=document.getElementById('hint');el.hidden=!el.hidden;b.setAttribute('aria-expanded',String(!el.hidden));b.textContent=el.hidden?'Hilfe zeigen':'Hilfe verstecken'},
   ans(b){if(play.locked)return;const t=play.task,o=t.opts[+b.dataset.i];
     if(o.v===t.ans){b.classList.add('ok');document.querySelectorAll('.opts .big').forEach(x=>x.disabled=true);
       if(t.fill){const g=document.getElementById('gap');if(g){g.innerHTML=o.t||o.html.replace(/<small>.*<\/small>/,'');g.classList.add('filled')}}
